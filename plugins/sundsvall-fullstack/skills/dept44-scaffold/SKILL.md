@@ -62,7 +62,3 @@ After scaffolding, run `mvn test` to verify unit tests pass, then `mvn verify` t
 - Do NOT use when modifying existing endpoints or code — use `/dept44-patterns` instead.
 - Do NOT use for framework internals lookup — use `/dept44-source`.
 - Do NOT use for validator patterns — use `/dept44-validators`.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

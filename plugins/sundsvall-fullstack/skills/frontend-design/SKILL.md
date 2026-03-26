@@ -55,7 +55,3 @@ Use this before marking any frontend task as complete:
 
 - Do NOT use for component APIs — use `/sk-web-gui`.
 - Do NOT use for app structure, routing, or state management — use `/frontend-app`.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

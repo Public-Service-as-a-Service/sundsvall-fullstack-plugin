@@ -41,7 +41,7 @@ Without these tokens, the Atlassian skills (`/sundsvall-fullstack:atlassian`, `/
 
 A single consolidated plugin covering the full Sundsvall development stack.
 
-#### Skills (13)
+#### Skills (14)
 
 **Backend** (6 skills) — dept44 Spring Boot microservice patterns:
 
@@ -70,6 +70,12 @@ A single consolidated plugin covering the full Sundsvall development stack.
 | `/sundsvall-fullstack:fullstack-feature` | End-to-end feature implementation — backend-first ordering, BFF bridge, contract alignment, verification |
 | `/sundsvall-fullstack:atlassian` | Jira/Confluence tool reference — JQL/CQL queries, issue lookup, documentation search |
 | `/sundsvall-fullstack:workflow` | Jira+GitHub workflow — pick up ticket, create branch, PR with Jira linking, status transitions |
+
+**Plugin maintenance** (1 skill):
+
+| Skill | What it does |
+|---|---|
+| `/sundsvall-fullstack:improve-skill` | Review, classify, and promote accumulated skill improvement entries into concrete SKILL.md edits |
 
 #### Subagents (3)
 
@@ -105,7 +111,24 @@ Loaded into every conversation automatically:
 
 Skills use **progressive disclosure** — CLAUDE.md is always loaded (~50 lines of essential rules), while detailed reference material is loaded on demand when a skill triggers. This keeps context usage low when working on one stack.
 
-Skills include **behavioral routing** ("When NOT to Use" sections) that direct Claude to the correct skill when triggers overlap, and **improvement logs** where the agent can record edge cases it encounters for future reference.
+Skills include **behavioral routing** ("When NOT to Use" sections) that direct Claude to the correct skill when triggers overlap.
+
+## Self-improving skills
+
+The plugin includes a lightweight learning loop inspired by [Hermes Agent](https://github.com/NousResearch/hermes-agent). When the agent notices a skill gave objectively wrong guidance (wrong API, wrong import, wrong pattern), it fixes the task first, then asks if you want to log the finding.
+
+**How it works:**
+
+1. During normal work, the agent detects wrong skill guidance and asks: "Log this for future improvement?"
+2. If you agree, it appends a structured entry to `~/.claude/sundsvall-improvements.jsonl`
+3. Entries accumulate across all your projects in that single file
+4. When ready, run `/sundsvall-fullstack:improve-skill` from the plugin repo
+5. The skill validates entries, deduplicates, asks you to classify each one (skill bug, project-specific, or noise), proposes concrete SKILL.md edits for bugs, and compacts the file after review
+6. Commit and push — the whole team gets the improvement
+
+The skill also supports **manual intake** — if you notice an issue the agent missed, run `/sundsvall-fullstack:improve-skill` and log it directly. Manual intake works from any project; review/promote requires the plugin repo checkout.
+
+All writes use atomic file operations (temp file + rename) to prevent corruption.
 
 ## Adding more plugins
 

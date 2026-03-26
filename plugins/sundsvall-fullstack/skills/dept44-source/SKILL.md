@@ -31,7 +31,3 @@ Read the relevant file(s) based on what you need — most tasks only need one or
 
 - Do NOT use when writing application code — use `/dept44-patterns` or `/dept44-scaffold`.
 - This skill is for understanding framework internals only.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

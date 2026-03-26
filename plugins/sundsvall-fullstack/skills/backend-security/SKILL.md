@@ -106,7 +106,3 @@ spring:
 
 - Do NOT use for frontend OAuth/token patterns (BFF token management) — use `/frontend-app` bff-pattern reference.
 - Do NOT use for general dept44 patterns — use `/dept44-patterns`.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

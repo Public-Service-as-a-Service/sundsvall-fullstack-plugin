@@ -126,7 +126,3 @@ https://jira.sundsvall.se/browse/DRAKEN-1234
 - Jira links go at the **bottom** as plain URLs (not in a separate section)
 - When editing an existing PR body, **always preserve all existing content** — never remove existing Jira links or other content
 - **Never** include AI attribution (e.g. "Generated with Claude Code", "Co-Authored-By: Claude") in PR body, commits, or code
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

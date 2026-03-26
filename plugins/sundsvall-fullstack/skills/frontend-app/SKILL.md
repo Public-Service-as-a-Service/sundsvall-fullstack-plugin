@@ -80,7 +80,3 @@ web-app-{name}/
 
 - Do NOT use for component API reference — use `/sk-web-gui`.
 - Do NOT use for design principles — use `/frontend-design`.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

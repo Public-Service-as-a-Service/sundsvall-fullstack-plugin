@@ -33,7 +33,3 @@ After completing all migration steps:
 2. Run `mvn verify` — integration tests must pass, especially tests using `WebTestClient` (need `@AutoConfigureWebTestClient`) and `@Captor` (needs `MockitoExtension`).
 3. Search for leftover `org.zalando.problem` imports — none should remain.
 4. Search for `com.fasterxml.jackson` — should be `tools.jackson` after Jackson 3 migration.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

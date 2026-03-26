@@ -103,7 +103,3 @@ After writing tests:
 
 - Do NOT use for E2E/Cypress testing — this skill covers unit and component tests only.
 - Do NOT use for backend Java tests — use `/dept44-patterns` (pattern-apptest, pattern-resource references).
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

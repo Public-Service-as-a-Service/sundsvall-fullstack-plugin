@@ -167,7 +167,3 @@ cd frontend && npm run type-check && npm run lint
 - Using `@Autowired` instead of constructor injection with `final` fields
 - Lombok annotations — not allowed, use manual getters/setters
 - Returning `null` for not-found instead of `Problem.valueOf(NOT_FOUND, ...)`
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

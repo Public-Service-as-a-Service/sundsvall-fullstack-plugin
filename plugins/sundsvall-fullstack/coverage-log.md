@@ -1,6 +1,6 @@
 # Sundsvall Fullstack Plugin — Coverage Log
 
-## Skills (13 total)
+## Skills (14 total)
 
 ### Backend Skills (6)
 | Skill | Purpose | Patterns Covered |
@@ -27,6 +27,11 @@
 | `workflow` | Full Jira+GitHub development workflow | Ticket pickup, branch creation, PR creation, bidirectional Jira-GitHub linking, status transitions |
 | `fullstack-feature` | End-to-end feature implementation across both stacks | Feature decomposition, BFF bridge, contract alignment, implementation order, verification sequence |
 
+### Plugin Maintenance (1)
+| Skill | Purpose | Patterns Covered |
+|---|---|---|
+| `improve-skill` | Review, classify, and promote accumulated skill improvement entries into concrete SKILL.md edits | JSONL review, classification (skill bug/project-specific/noise), atomic compaction, manual intake |
+
 ## Subagents (3)
 | Agent | Specialization | Preloaded Skills |
 |---|---|---|
@@ -43,7 +48,9 @@
 
 ## Self-Improvement Mechanism
 
-All 13 skills include an **Improvement Log** section at the bottom. When a skill causes an error or misses an edge case, the agent appends a timestamped entry. Future invocations of the skill see this accumulated knowledge, preventing repeated mistakes.
+CLAUDE.md instructs the agent to notice objectively wrong skill guidance (wrong API, wrong import, wrong pattern) during normal work. When detected, the agent fixes the task first, then asks the user whether to log the finding to `~/.claude/sundsvall-improvements.jsonl`.
+
+The `/improve-skill` command reviews accumulated entries, classifies them (skill bug, project-specific, or noise), proposes concrete SKILL.md edits for skill bugs, and compacts the JSONL after review. It also supports manual intake for issues the agent didn't catch. Run it from the plugin repo to commit improvements directly.
 
 ## Behavioral Routing
 
@@ -70,7 +77,7 @@ Assessed against skill-creator methodology: description trigger quality, imperat
 | `workflow` | Adequate — covers PR workflow keywords | Yes | N/A (workflow steps are verification) | Yes — references /atlassian | Copied verbatim, adequate for purpose |
 
 ## Validation Results
-- All 13 skill directories have SKILL.md with YAML frontmatter and description field
+- All 14 skill directories have SKILL.md with YAML frontmatter and description field
 - All 28 reference files exist and are accessible
 - All 3 JSON config files (hooks.json, plugin.json, .mcp.json) are valid
 - All 3 agent files have required frontmatter (name, description, tools, skills)

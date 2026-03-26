@@ -90,7 +90,3 @@ lastModified >= "2026-01-01" AND text ~ "architecture"
 1. Call `confluence_search` with relevant keywords
 2. Read the most relevant pages for context
 3. Use internal documentation over assumptions
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

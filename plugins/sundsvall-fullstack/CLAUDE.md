@@ -6,6 +6,7 @@
 2. **Simplest solution** — write the simplest code that solves the problem. No premature abstractions, no features beyond what's requested.
 3. **Surgical changes** — only change what's necessary. Don't refactor surrounding code, don't add comments or type annotations to unchanged code.
 4. **Verify against goal** — define success criteria before starting, verify changes against the original request, surface blockers immediately.
+5. **Log skill issues** — if a skill from this plugin gives objectively wrong guidance (wrong API, wrong import, wrong pattern, missing mandatory convention), fix the task first, then ask the user if they want to log it to `~/.claude/sundsvall-improvements.jsonl`.
 
 ## Frontend Golden Rules
 

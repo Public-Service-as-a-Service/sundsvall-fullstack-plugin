@@ -251,7 +251,3 @@ When unsure if a component exists:
 
 - Do NOT use for app architecture, routing, or state management — use `/frontend-app`.
 - Do NOT use for design principles or accessibility guidelines — use `/frontend-design`.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

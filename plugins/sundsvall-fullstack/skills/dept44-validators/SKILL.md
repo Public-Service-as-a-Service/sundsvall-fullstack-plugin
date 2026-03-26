@@ -36,7 +36,3 @@ After adding validators, verify by running `mvn test` then `mvn verify`. Check t
 
 - Do NOT use for general field validation with Jakarta annotations — use `/dept44-patterns` pattern-pojo reference.
 - This skill is for custom dept44 validators only.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

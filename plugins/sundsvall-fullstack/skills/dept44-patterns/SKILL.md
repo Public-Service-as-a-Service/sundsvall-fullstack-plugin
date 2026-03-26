@@ -39,7 +39,3 @@ After writing or modifying code based on these patterns, verify by running `mvn 
 - Do NOT use when creating components from scratch — use `/dept44-scaffold` instead.
 - Do NOT use for validator patterns — use `/dept44-validators`.
 - Do NOT use for framework internals lookup — use `/dept44-source`.
-
-## Improvement Log
-<!-- Append entries when this skill causes errors or misses edge cases -->
-<!-- Format: YYYY-MM-DD: <what went wrong, what to do differently> -->

@@ -16,14 +16,24 @@ Add the marketplace, then install the plugin:
 
 ### Atlassian integration (optional)
 
-The plugin includes Jira/Confluence integration via MCP. Set these environment variables to enable it:
+The plugin includes Jira/Confluence integration via MCP. The MCP server reads tokens from your shell environment when Claude Code starts, so the variables need to be set **before** launching Claude Code.
+
+**One-time setup** — add to your shell profile so the tokens persist across sessions:
 
 ```bash
+# Add these lines to ~/.zshrc (macOS) or ~/.bashrc (Linux)
 export JIRA_PERSONAL_TOKEN="your-jira-token"
 export CONFLUENCE_PERSONAL_TOKEN="your-confluence-token"
 ```
 
-Without these tokens, the Atlassian skills and MCP tools will not function. Everything else works without configuration.
+Then reload your shell (`source ~/.zshrc`) or open a new terminal. The tokens are now available every time you start Claude Code — you do not need to set them again.
+
+> **Note:** The tokens are stored in plain text in your shell profile. If your organization requires more secure token storage, you can reference a secrets manager instead:
+> ```bash
+> export JIRA_PERSONAL_TOKEN="$(security find-generic-password -s jira-token -w)"  # macOS Keychain
+> ```
+
+Without these tokens, the Atlassian skills (`/sundsvall-fullstack:atlassian`, `/sundsvall-fullstack:workflow`) and MCP tools will not function. Everything else works without configuration.
 
 ## What's included
 

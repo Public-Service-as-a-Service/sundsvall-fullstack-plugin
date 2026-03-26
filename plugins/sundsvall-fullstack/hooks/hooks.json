@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "(?i)(skapa|create|gör|pusha|push).*(pr|pull.?request)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'PÅMINNELSE — Följ HELA PR-flödet (se workflow skill för detaljer):\n1. Läs befintlig PR body först om PR redan finns — ta ALDRIG bort existerande innehåll\n2. Jira-länk(ar) längst ned i PR body (plain URL)\n3. PR-länk som kommentar på Jira-ticketen\n4. Transition Jira till In Review\n5. Ingen AI-attribution i commits, PR body eller kod'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/check-dept44-patterns.sh\""
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'REMINDER — After subagent work, verify contract alignment:\n1. Java API model field names match TypeScript interface fields\n2. REST endpoint paths match BFF proxy routes\n3. BFF proxy routes match frontend apiService calls\n4. Response envelope (ApiResponse<T>) is consistent'"
+          }
+        ]
+      }
+    ]
+  }
+}

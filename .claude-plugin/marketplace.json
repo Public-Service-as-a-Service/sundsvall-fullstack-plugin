@@ -1,0 +1,14 @@
+{
+  "name": "sundsvall-fullstack-plugin",
+  "description": "Claude Code plugins for Sundsvallskommun fullstack development — dept44 backend, Next.js + @sk-web-gui frontend, Jira/Confluence integration",
+  "owner": {
+    "name": "Sundsvallskommun"
+  },
+  "plugins": [
+    {
+      "name": "sundsvall-fullstack",
+      "source": "./plugins/sundsvall-fullstack",
+      "description": "Fullstack development plugin — dept44 Spring Boot backend, Next.js + @sk-web-gui frontend, Jira/Confluence integration, subagents, and coding guidelines"
+    }
+  ]
+}

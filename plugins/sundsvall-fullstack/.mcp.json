@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "mcp-atlassian": {
+      "command": "uvx",
+      "args": ["mcp-atlassian", "--no-jira-ssl-verify", "--no-confluence-ssl-verify"],
+      "env": {
+        "JIRA_URL": "https://jira.sundsvall.se",
+        "JIRA_PERSONAL_TOKEN": "${JIRA_PERSONAL_TOKEN}",
+        "CONFLUENCE_URL": "https://confluence.sundsvall.se",
+        "CONFLUENCE_PERSONAL_TOKEN": "${CONFLUENCE_PERSONAL_TOKEN}",
+        "MCP_ATLASSIAN_USE_SYSTEM_TRUSTSTORE": "false",
+        "JIRA_SSL_VERIFY": "false",
+        "CONFLUENCE_SSL_VERIFY": "false",
+        "READ_ONLY_MODE": "false",
+        "ENABLED_TOOLS": "get_user_profile,get_issue,search,search_fields,get_transitions,get_project_issues,get_issue_watchers,batch_get_changelogs,get_link_types,get_issue_comments,confluence_search,confluence_get_page,transition_issue,update_issue,add_comment,edit_comment,create_remote_issue_link"
+      }
+    }
+  }
+}

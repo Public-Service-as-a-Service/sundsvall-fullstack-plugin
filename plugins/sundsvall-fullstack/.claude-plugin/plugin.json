@@ -1,6 +1,6 @@
 {
   "name": "sundsvall-fullstack",
-  "description": "Sundsvall fullstack development plugin — dept44 Spring Boot backend, Next.js + @sk-web-gui frontend, Jira/Confluence integration, and coding guidelines",
+  "description": "Sundsvall fullstack development plugin — dept44 Spring Boot backend, Next.js + @sk-web-gui frontend, Jira/Confluence integration, and coding guidelines. Note: Jira/Confluence MCP requires JIRA_PERSONAL_TOKEN and CONFLUENCE_PERSONAL_TOKEN in your shell profile (~/.zshrc). Without them you will see an MCP error on load — all other features work fine. See README for one-time setup.",
   "version": "1.0.0",
   "author": {
     "name": "Sundsvallskommun"

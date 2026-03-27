@@ -2,6 +2,16 @@
 
 Claude Code plugin marketplace for Sundsvallskommun fullstack development — dept44 Spring Boot microservices and Next.js + @sk-web-gui web applications.
 
+## TL;DR
+
+**What it does:** Teaches Claude the Sundsvall tech stack — dept44 Spring Boot patterns (no Lombok, constructor injection, @CircuitBreaker), @sk-web-gui components, Next.js App Router with BFF, Jira/GitHub workflow, and more. Install once, works in every Sundsvall repo.
+
+**How it works:** 15 skills load on demand (not always in context). CLAUDE.md keeps 50-ish always-on rules — golden rules, common mistakes, PR workflow. Skills add deep reference when you're working on that area. Hooks fire automatically to catch pattern violations in Java files and remind about PR workflow.
+
+**Memory:** The plugin remembers cross-project preferences and ecosystem facts across sessions in two small local files (`~/.claude/sundsvall-memory.md`, `~/.claude/sundsvall-user.md`). Say "remember this" and it saves. Say "forget this" or run `/memory-manager` to review and manage. Not synced — local to your machine only.
+
+**Self-improvement:** When a skill gives wrong guidance, you can log it to `~/.claude/sundsvall-improvements.jsonl`. Run `/improve-skill` from this repo to review, classify, and promote fixes into the shared plugin — the whole team benefits.
+
 ## Installation
 
 Add the marketplace, then install the plugin:
@@ -41,7 +51,7 @@ Without these tokens, the Atlassian skills (`/sundsvall-fullstack:atlassian`, `/
 
 A single consolidated plugin covering the full Sundsvall development stack.
 
-#### Skills (14)
+#### Skills (15)
 
 **Backend** (6 skills) — dept44 Spring Boot microservice patterns:
 
@@ -58,8 +68,8 @@ A single consolidated plugin covering the full Sundsvall development stack.
 
 | Skill | What it does |
 |---|---|
-| `/sundsvall-fullstack:sk-web-gui` | Full component reference for @sk-web-gui/react — components, props, compound patterns, theming |
-| `/sundsvall-fullstack:frontend-app` | App Router structure, provider hierarchy, BFF pattern, Zustand state, i18n, Tailwind config |
+| `/sundsvall-fullstack:sk-web-gui` | Component reference for @sk-web-gui/react — components, props, compound patterns, GuiProvider, icons — works for any project using the library |
+| `/sundsvall-fullstack:frontend-app` | Sundsvall web-app-* architecture — App Router, provider hierarchy, BFF pattern, Zustand state, i18n, Tailwind config |
 | `/sundsvall-fullstack:frontend-design` | UI/UX guidelines — accessibility (WCAG AA), responsive design, component structure, code review checklist |
 | `/sundsvall-fullstack:frontend-testing` | Jest + React Testing Library — component tests, mocking apiService/stores, testing i18n |
 
@@ -71,11 +81,12 @@ A single consolidated plugin covering the full Sundsvall development stack.
 | `/sundsvall-fullstack:atlassian` | Jira/Confluence tool reference — JQL/CQL queries, issue lookup, documentation search |
 | `/sundsvall-fullstack:workflow` | Jira+GitHub workflow — pick up ticket, create branch, PR with Jira linking, status transitions |
 
-**Plugin maintenance** (1 skill):
+**Plugin maintenance** (2 skills):
 
 | Skill | What it does |
 |---|---|
 | `/sundsvall-fullstack:improve-skill` | Review, classify, and promote accumulated skill improvement entries into concrete SKILL.md edits |
+| `/sundsvall-fullstack:memory-manager` | Manage durable cross-project memory — ecosystem facts, workflow defaults, personal preferences |
 
 #### Subagents (3)
 
@@ -106,12 +117,24 @@ Loaded into every conversation automatically:
 - Backend golden rules (final everywhere, no Lombok, @CircuitBreaker, constructor injection, Problem.valueOf)
 - Common mistakes to avoid for both stacks
 - Jira PR workflow checklist
+- Memory routing (routes "remember this" / "kom ihåg detta" to `/memory-manager`, skill defects to `/improve-skill`)
 
 ## How it works
 
 Skills use **progressive disclosure** — CLAUDE.md is always loaded (~50 lines of essential rules), while detailed reference material is loaded on demand when a skill triggers. This keeps context usage low when working on one stack.
 
 Skills include **behavioral routing** ("When NOT to Use" sections) that direct Claude to the correct skill when triggers overlap.
+
+## Durable memory
+
+The plugin stores cross-project facts in two small user-scoped files at `~/.claude/`:
+
+- `sundsvall-memory.md` — ecosystem-wide technical defaults: Jira project, dept44 version, workflow conventions (~2600 char cap)
+- `sundsvall-user.md` — personal preferences: communication style, code preferences, review style (~1600 char cap)
+
+These files are local to your machine — not committed to git, not shared with other developers. Run `/sundsvall-fullstack:memory-manager` to add, remove, or review stored memory. Say "remember this" (or "kom ihåg detta") and the agent routes it there automatically.
+
+**Routing:** "remember this" → `/memory-manager` · skill defects → `/improve-skill` · project shared rules → project `CLAUDE.md` · personal per-project preferences → Claude Code project memory
 
 ## Self-improving skills
 

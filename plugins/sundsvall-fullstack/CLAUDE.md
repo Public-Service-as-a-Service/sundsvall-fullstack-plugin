@@ -7,6 +7,7 @@
 3. **Surgical changes** — only change what's necessary. Don't refactor surrounding code, don't add comments or type annotations to unchanged code.
 4. **Verify against goal** — define success criteria before starting, verify changes against the original request, surface blockers immediately.
 5. **Log skill issues** — if a skill from this plugin gives objectively wrong guidance (wrong API, wrong import, wrong pattern, missing mandatory convention), fix the task first, then ask the user if they want to log it to `~/.claude/sundsvall-improvements.jsonl`.
+6. **Durable memory** — when the user says "remember this" / "kom ihåg detta" or shares a persistent cross-project preference, route to `/memory-manager`. The agent may also proactively offer to save once per conversation when a clearly durable cross-project preference is detected — after the main task, never mid-execution. Skill defects go to `/improve-skill`, not memory. Project-specific shared rules go to the project's `CLAUDE.md`; personal per-project preferences go to Claude Code project memory.
 
 ## Frontend Golden Rules
 

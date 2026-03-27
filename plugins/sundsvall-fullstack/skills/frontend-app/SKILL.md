@@ -1,10 +1,12 @@
 ---
-description: "Next.js application patterns for Sundsvall web apps — App Router structure, provider hierarchy (GuiProvider + LocalizationProvider), BFF proxy backend, Zustand state management, i18n with Swedish default, API service patterns, Tailwind with @sk-web-gui/core preset. Use when creating new pages, components, stores, or services in a Sundsvall Next.js app, or when setting up a new web-app-* project."
+description: "Sundsvall web-app-* architecture — App Router structure, provider hierarchy (GuiProvider + LocalizationProvider wiring), BFF proxy backend, Zustand state management, i18n with Swedish default, API service patterns, Tailwind with @sk-web-gui/core preset. Use when creating pages, setting up project structure, wiring providers, building services/stores, or configuring the Express BFF in a Sundsvall Next.js project."
 ---
 
 # Frontend App Patterns
 
 Conventions and architecture for Sundsvall `web-app-*` projects — Next.js frontend with Express BFF backend.
+
+**Routing heuristic:** If the question is "where does this go in the app or how is it wired?", stay here. If the question is "which component or prop should I use?", use `/sk-web-gui`.
 
 ## When to Use
 
@@ -78,5 +80,5 @@ web-app-{name}/
 
 ## When NOT to Use
 
-- Do NOT use for component API reference — use `/sk-web-gui`.
-- Do NOT use for design principles — use `/frontend-design`.
+- Do NOT use for component API, props, variants, or deciding which sk-web-gui component to use — use `/sk-web-gui`.
+- Do NOT use for design principles or accessibility guidelines — use `/frontend-design`.

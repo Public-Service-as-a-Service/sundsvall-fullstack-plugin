@@ -1,10 +1,12 @@
 ---
-description: "Component reference for @sk-web-gui/react — Sundsvallskommun's design system. Use when building any UI, choosing the right component, looking up component props or variants, ensuring correct compound pattern usage (Table.Header, Card.Body), wrapping icons with Icon, configuring GuiProvider, or checking if a sk-web-gui component exists before writing custom HTML."
+description: "Component reference for @sk-web-gui/react. Use when building UI in any project that uses @sk-web-gui — choosing components, checking props/variants, applying compound patterns (Table.Header, Card.Body), wrapping icons with Icon, configuring GuiProvider, or verifying whether a component exists before writing custom UI."
 ---
 
 # sk-web-gui Design System
 
-When building UI in Sundsvallskommun web applications, always prefer `@sk-web-gui` components over raw HTML elements or custom implementations.
+When building UI in any project that uses `@sk-web-gui`, always prefer its components over raw HTML elements or custom implementations.
+
+**Routing heuristic:** If the question is "which component or prop should I use?", stay here. If the question is "where does this live in the app or how is it wired?", use `/frontend-app`.
 
 ## Import Pattern
 
@@ -45,13 +47,7 @@ GuiProvider props:
 - `theme` — custom theme object
 - `baseFontSize` — default: 10px
 
-Tailwind must include the core plugin:
-
-```js
-// tailwind.config.js
-presets: [require('@sk-web-gui/core').preset()],
-content: ['./node_modules/@sk-web-gui/*/dist/**/*.js'],
-```
+Some projects configure the `@sk-web-gui/core` Tailwind preset — see `/frontend-app` for app-level Tailwind setup.
 
 ## Composite/Compound Pattern
 
@@ -245,9 +241,8 @@ When unsure if a component exists:
 - **Stay consistent**: Use the same variants and sizes across the application
 - **Check existing usage**: Look at how the project already uses a component before adding new usage
 - **GuiProvider required**: Ensure the app root has `<GuiProvider>` wrapping all content
-- **Tailwind integration**: Include `@sk-web-gui/core` in Tailwind config for proper styling
 
 ## When NOT to Use
 
-- Do NOT use for app architecture, routing, or state management — use `/frontend-app`.
+- Do NOT use for app architecture, routing, state management, BFF, i18n, or project bootstrapping — use `/frontend-app`.
 - Do NOT use for design principles or accessibility guidelines — use `/frontend-design`.

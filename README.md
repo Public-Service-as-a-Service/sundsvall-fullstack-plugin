@@ -27,7 +27,7 @@ Add the marketplace once, then install the plugin:
 
 ```bash
 # Add the marketplace (one-time)
-/plugin marketplace add Sundsvallskommun/sundsvall-fullstack-plugin
+/plugin marketplace add Public-Service-as-a-Service/sundsvall-fullstack-plugin
 
 # Install the fullstack plugin
 /plugin install sundsvall-fullstack@sundsvall-fullstack-plugin

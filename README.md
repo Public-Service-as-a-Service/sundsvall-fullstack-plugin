@@ -1,20 +1,29 @@
 # Sundsvall Fullstack Plugin
 
-Claude Code plugin marketplace for Sundsvallskommun fullstack development — dept44 Spring Boot microservices and Next.js + @sk-web-gui web applications.
+Claude Code plugin marketplace for Sundsvallskommun fullstack development. It teaches Claude how Sundsvall projects work: dept44 Spring Boot microservices, Next.js + `@sk-web-gui` web apps, Jira/GitHub workflow, and the guardrails that keep changes aligned with team conventions.
 
 ## TL;DR
 
-**What it does:** Teaches Claude the Sundsvall tech stack — dept44 Spring Boot patterns (no Lombok, constructor injection, @CircuitBreaker), @sk-web-gui components, Next.js App Router with BFF, Jira/GitHub workflow, and more. Install once, works in every Sundsvall repo.
+- **What it does:** teaches Claude the Sundsvall stack: dept44 backend patterns, `@sk-web-gui` usage, Sundsvall `web-app-*` frontend architecture, and Jira/GitHub workflow.
+- **How it works:** small always-on rules in `CLAUDE.md`, deeper skills loaded on demand, and a few hooks for pattern checks and workflow reminders.
+- **Memory:** stores small local cross-project facts and preferences in `~/.claude/sundsvall-memory.md` and `~/.claude/sundsvall-user.md`. Not shared, not synced, not committed.
+- **Self-improvement:** lets developers log wrong skill guidance to `~/.claude/sundsvall-improvements.jsonl`, review it with `/sundsvall-fullstack:improve-skill`, and promote good fixes into the shared plugin.
 
-**How it works:** 15 skills load on demand (not always in context). CLAUDE.md keeps 50-ish always-on rules — golden rules, common mistakes, PR workflow. Skills add deep reference when you're working on that area. Hooks fire automatically to catch pattern violations in Java files and remind about PR workflow.
+## Quick Start
 
-**Memory:** The plugin remembers cross-project preferences and ecosystem facts across sessions in two small local files (`~/.claude/sundsvall-memory.md`, `~/.claude/sundsvall-user.md`). Say "remember this" and it saves. Say "forget this" or run `/memory-manager` to review and manage. Not synced — local to your machine only.
-
-**Self-improvement:** When a skill gives wrong guidance, you can log it to `~/.claude/sundsvall-improvements.jsonl`. Run `/improve-skill` from this repo to review, classify, and promote fixes into the shared plugin — the whole team benefits.
+1. Add the marketplace and install the plugin.
+2. Restart Claude Code if it was already running.
+3. Open any Sundsvall repo and work normally.
+4. Use slash commands when you want something specific:
+   - `/sundsvall-fullstack:dept44-patterns`
+   - `/sundsvall-fullstack:frontend-app`
+   - `/sundsvall-fullstack:sk-web-gui`
+   - `/sundsvall-fullstack:workflow`
+5. Say `remember this` or `kom ihåg detta` if you want to save a cross-project preference.
 
 ## Installation
 
-Add the marketplace, then install the plugin:
+Add the marketplace once, then install the plugin:
 
 ```bash
 # Add the marketplace (one-time)
@@ -23,6 +32,8 @@ Add the marketplace, then install the plugin:
 # Install the fullstack plugin
 /plugin install sundsvall-fullstack@sundsvall-fullstack-plugin
 ```
+
+If Claude Code is already open, restart it after installation so the plugin, hooks, and MCP configuration reload cleanly.
 
 ### Atlassian integration (optional)
 
@@ -117,41 +128,58 @@ Loaded into every conversation automatically:
 - Backend golden rules (final everywhere, no Lombok, @CircuitBreaker, constructor injection, Problem.valueOf)
 - Common mistakes to avoid for both stacks
 - Jira PR workflow checklist
-- Memory routing (routes "remember this" / "kom ihåg detta" to `/memory-manager`, skill defects to `/improve-skill`)
+- Memory routing rules for `remember this` / `kom ihåg detta`, project rules, and skill improvements
 
 ## How it works
 
-Skills use **progressive disclosure** — CLAUDE.md is always loaded (~50 lines of essential rules), while detailed reference material is loaded on demand when a skill triggers. This keeps context usage low when working on one stack.
+The plugin uses **progressive disclosure**:
 
-Skills include **behavioral routing** ("When NOT to Use" sections) that direct Claude to the correct skill when triggers overlap.
+1. `CLAUDE.md` is always loaded and keeps the essential rules small.
+2. Skills load only when the current task needs them.
+3. Hooks add a few automatic reminders and pattern checks.
+4. Memory and self-improvement stay local until a developer chooses to promote something into the shared plugin.
+
+This keeps context usage low while still giving Claude deep project knowledge when it matters.
+
+![Plugin architecture — progressive disclosure](plugins/sundsvall-fullstack/SCR-20260327-kkan.png)
+
+Skills also include **behavioral routing** (`When NOT to Use` sections) so Claude can move to the correct skill when two areas overlap.
 
 ## Durable memory
 
-The plugin stores cross-project facts in two small user-scoped files at `~/.claude/`:
+The plugin can remember small, durable facts across Sundsvall projects in two local files under `~/.claude/`:
 
-- `sundsvall-memory.md` — ecosystem-wide technical defaults: Jira project, dept44 version, workflow conventions (~2600 char cap)
-- `sundsvall-user.md` — personal preferences: communication style, code preferences, review style (~1600 char cap)
+- `sundsvall-memory.md` — ecosystem-wide technical defaults such as dept44 version, workflow conventions, or active exceptions
+- `sundsvall-user.md` — personal cross-project preferences such as communication style, code preferences, or review style
 
-These files are local to your machine — not committed to git, not shared with other developers. Run `/sundsvall-fullstack:memory-manager` to add, remove, or review stored memory. Say "remember this" (or "kom ihåg detta") and the agent routes it there automatically.
+Both files are intentionally small and local to your machine. They are not committed to git, not shared with other developers, and not synced across machines.
 
-**Routing:** "remember this" → `/memory-manager` · skill defects → `/improve-skill` · project shared rules → project `CLAUDE.md` · personal per-project preferences → Claude Code project memory
+Use `/sundsvall-fullstack:memory-manager` to review or manage them.
+
+Routing model:
+- `remember this` / `kom ihåg detta` → `/sundsvall-fullstack:memory-manager`
+- skill defect → `/sundsvall-fullstack:improve-skill`
+- project shared rule → project `CLAUDE.md`
+- personal per-project preference → Claude Code project memory
+
+![Memory routing — where does persistent information go?](plugins/sundsvall-fullstack/SCR-20260327-kjsy.png)
 
 ## Self-improving skills
 
-The plugin includes a lightweight learning loop inspired by [Hermes Agent](https://github.com/NousResearch/hermes-agent). When the agent notices a skill gave objectively wrong guidance (wrong API, wrong import, wrong pattern), it fixes the task first, then asks if you want to log the finding.
+The plugin includes a lightweight learning loop inspired by [Hermes Agent](https://github.com/NousResearch/hermes-agent). When the agent notices a skill gave objectively wrong guidance, it can ask whether you want to log that issue for later review.
 
-**How it works:**
+How it works:
 
 1. During normal work, the agent detects wrong skill guidance and asks: "Log this for future improvement?"
 2. If you agree, it appends a structured entry to `~/.claude/sundsvall-improvements.jsonl`
 3. Entries accumulate across all your projects in that single file
 4. When ready, run `/sundsvall-fullstack:improve-skill` from the plugin repo
-5. The skill validates entries, deduplicates, asks you to classify each one (skill bug, project-specific, or noise), proposes concrete SKILL.md edits for bugs, and compacts the file after review
-6. Commit and push — the whole team gets the improvement
+5. The skill validates entries, deduplicates them, asks you to classify each one, and proposes concrete `SKILL.md` edits for real plugin bugs
+6. Commit and push the approved fixes so the whole team benefits
 
-The skill also supports **manual intake** — if you notice an issue the agent missed, run `/sundsvall-fullstack:improve-skill` and log it directly. Manual intake works from any project; review/promote requires the plugin repo checkout.
+The same skill also supports **manual intake**. If you notice an issue the agent missed, run `/sundsvall-fullstack:improve-skill` and log it directly. Manual intake works from any project; review/promote requires the plugin repo checkout.
 
-All writes use atomic file operations (temp file + rename) to prevent corruption.
+All writes use safe local file operations, and shared improvement only happens when a developer chooses to promote and commit a fix.
 
 ## Adding more plugins
 

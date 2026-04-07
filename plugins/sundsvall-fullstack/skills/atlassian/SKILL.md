@@ -1,10 +1,59 @@
 ---
-description: Search and read Jira issues and Confluence pages at Sundsvallskommun. Use when you need ticket details, project context, or internal documentation.
+description: Search and read Jira issues and Confluence pages at Sundsvallskommun. Use when you need ticket details, project context, or internal documentation. Also covers the one-time setup required to enable the mcp-atlassian server.
 ---
 
 # Atlassian Integration
 
 Access to Jira and Confluence at Sundsvallskommun via mcp-atlassian.
+
+## Setup — the MCP server is opt-in
+
+To keep the default session lean, this plugin does **not** auto-load the Atlassian MCP server. Enable it once per machine (or per project) with the steps below. You only need this if you plan to read or write Jira/Confluence from Claude Code.
+
+### Prerequisites
+- `uvx` installed (`pipx install uv` or `brew install uv`)
+- A Jira/Confluence personal access token
+- Network access to `jira.sundsvall.se` / `confluence.sundsvall.se` (internal network or VPN)
+
+### 1. Set credentials
+
+Export these in your shell rc file (`~/.zshrc` or `~/.bashrc`):
+
+```bash
+export JIRA_PERSONAL_TOKEN="..."
+export CONFLUENCE_PERSONAL_TOKEN="..."
+```
+
+### 2. Register the MCP server
+
+Pick **one** of these two options:
+
+**Option A — project scope (recommended, only loads in repos where you work tickets):**
+```bash
+cp "$(find ~/.claude/plugins -name mcp-atlassian.template.json | head -1)" ./.mcp.json
+```
+Run this in each Sundsvall repo where you expect to use Jira from Claude Code. Other projects stay lean and pay zero MCP token cost. Commit (or `.gitignore`) the `.mcp.json` according to team policy.
+
+**Option B — user scope (for devs who work Jira every session, in every project):**
+```bash
+claude mcp add-json --scope user mcp-atlassian "$(cat "$CLAUDE_PLUGIN_ROOT/mcp-atlassian.template.json" | jq '.mcpServers["mcp-atlassian"]')"
+```
+
+If `$CLAUDE_PLUGIN_ROOT` is not set (you're outside a hook), locate the template with:
+```bash
+find ~/.claude/plugins -name mcp-atlassian.template.json
+```
+
+User-scope loads the MCP in every Claude Code session regardless of project, which is convenient but costs ~4–6K tokens per turn always. Only pick this if your work is predominantly ticket-driven.
+
+### 3. Verify
+
+In a new Claude Code session, run `/mcp` and confirm `mcp-atlassian` is listed as connected. If the tools below are still missing, check your token, VPN, and `uvx` installation.
+
+### Disabling again
+
+- User scope: `claude mcp remove --scope user mcp-atlassian`
+- Project scope: delete the `.mcp.json` in the repo root.
 
 ## Available read tools
 

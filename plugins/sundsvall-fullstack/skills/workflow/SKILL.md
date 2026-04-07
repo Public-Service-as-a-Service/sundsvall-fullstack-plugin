@@ -6,6 +6,10 @@ description: Manage the Jira+GitHub workflow — pick up a ticket, create a bran
 
 Handles the full development workflow between Jira and GitHub.
 
+## Requires the Atlassian MCP
+
+Every Jira step below (`jira_get_issue`, `get_transitions`, `transition_issue`, `add_comment`, `create_remote_issue_link`, etc.) needs the `mcp-atlassian` server. It is **opt-in** — see `atlassian` skill for the one-time setup. If the tools are missing when you try to call them, stop and tell the user to follow that setup first.
+
 ## Safety rules — READ THESE FIRST
 
 Before ANY write operation to Jira, you MUST:

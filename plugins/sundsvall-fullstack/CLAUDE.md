@@ -9,44 +9,26 @@
 5. **Log skill issues** — if a skill from this plugin gives objectively wrong guidance (wrong API, wrong import, wrong pattern, missing mandatory convention), fix the task first, then ask the user if they want to log it to `~/.claude/sundsvall-improvements.jsonl`.
 6. **Durable memory** — when the user says "remember this" / "kom ihåg detta" or shares a persistent cross-project preference, route to `/memory-manager`. The agent may also proactively offer to save once per conversation when a clearly durable cross-project preference is detected — after the main task, never mid-execution. Skill defects go to `/improve-skill`, not memory. Project-specific shared rules go to the project's `CLAUDE.md`; personal per-project preferences go to Claude Code project memory.
 
-## Frontend Golden Rules
+## Where the conventions live
 
-1. **Always use `@sk-web-gui/react`** — never raw HTML or custom implementations when a component exists.
-2. **Compound pattern** — use `Table.Header`, `Card.Body`, `Button.Group`, etc. No raw HTML inside sk-web-gui components.
-3. **GuiProvider required** — must wrap app root for theming (`colorScheme: light/dark/system`).
-4. **Check existing components first** — `grep -r "from '@sk-web-gui" src/` before creating anything new.
-5. **No raw HTML for UI elements** — if `@sk-web-gui` has it, use it.
+This file intentionally stays small — the detailed rules live in skills, which load on demand only when they're actually needed. Consult them when working in the relevant area.
 
-## Backend Golden Rules
+| Area | Skill | Covers |
+|---|---|---|
+| Backend patterns (entity, service, resource, mapper, scheduler, apptest) | `dept44-patterns` | All layer patterns + the `final` / no-Lombok / `@CircuitBreaker` / constructor-injection / `Problem.valueOf` rules |
+| Backend scaffolding | `dept44-scaffold` | Step-by-step templates for new endpoints, entities, integrations, schedulers |
+| Backend framework internals | `dept44-source` | Where classes live (`AbstractAppTest`, `Problem`, validators, pagination, uploads) |
+| Backend validation | `dept44-validators` | Built-in + custom validator patterns |
+| Backend security | `backend-security` | OAuth2, resource server, WSO2 gateway, FeignMultiCustomizer |
+| Backend major upgrades | `dept44-migrate` | dept44 7.x → 8.x migration |
+| Frontend component library | `sk-web-gui` | `@sk-web-gui/react` components, compound pattern, `GuiProvider`, icons |
+| Frontend app structure | `frontend-app` | Next.js App Router, BFF pattern, Zustand, i18n, apiService |
+| Frontend design + a11y | `frontend-design` | Layout, responsive, WCAG AA, review checklist |
+| Frontend tests | `frontend-testing` | Jest + RTL patterns, mocking apiService + stores |
+| End-to-end features | `fullstack-feature` | How backend + frontend connect; full implementation order |
+| Jira/GitHub workflow | `workflow` | Pick up ticket → branch → PR → link → transition. **Always follow this when creating a PR.** |
+| Jira/Confluence lookups | `atlassian` | Read tools (JQL/CQL), write safety rules, and the one-time MCP setup |
 
-1. **`final` everywhere** — all fields, parameters, variables, and local vars use `final`.
-2. **No Lombok** — no `@Data`, `@Builder`, `@Getter`, `@Setter`, `@AllArgsConstructor`, etc. Use manual getters/setters, `create()` + `with*()` fluent builders, and manual `equals`/`hashCode`/`toString`.
-3. **`@CircuitBreaker` on all repositories and Feign clients** — mandatory on every `@FeignClient` interface and repository interface.
-4. **Constructor injection only** — no `@Autowired`. All dependencies are `final` fields set via constructor.
-5. **`Problem.valueOf()` for errors** — use `Problem.valueOf(Status, message)` from `se.sundsvall.dept44.problem`, never return null for not-found cases.
+## Jira/Confluence integration is opt-in
 
-## Common Mistakes
-
-### Frontend
-- Missing `GuiProvider` wrapper at app root
-- Using raw `<button>`, `<input>`, `<table>` instead of sk-web-gui components
-- Hardcoded Swedish strings instead of using i18n
-- Direct API calls from components instead of BFF pattern
-- Missing path aliases (`@components/`, `@services/`)
-
-### Backend
-- Missing `@CircuitBreaker` on repository or Feign client interfaces
-- Using `@Autowired` instead of constructor injection
-- Lombok annotations (`@Data`, `@Builder`, `@Getter`, `@Setter`)
-- Using `org.zalando.problem` instead of `se.sundsvall.dept44.problem`
-- Wildcard imports (`import java.util.*`)
-- Missing `final` on method parameters or local variables
-- Returning `null` instead of `Problem.valueOf(NOT_FOUND, ...)`
-- Using `@PathVariable("name")` with redundant name attribute
-
-## Jira PR Workflow
-
-When creating a PR, ALWAYS do all steps automatically:
-1. **PR body** — include Jira link: `[DRAKEN-XXXX](https://jira.sundsvall.se/browse/DRAKEN-XXXX)`
-2. **Jira comment** — add PR link as comment on the Jira ticket
-3. **Jira transition** — transition the ticket to "In Review"
+The `atlassian` and `workflow` skills use an MCP server to talk to `jira.sundsvall.se` and `confluence.sundsvall.se`. It is **not enabled by default** — see `skills/atlassian/SKILL.md` for setup.
